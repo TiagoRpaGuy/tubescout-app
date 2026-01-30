@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TubeScout 🔭
 
-## Getting Started
+**Plataforma de Inteligência para Criadores e Estrategistas do YouTube.**
+O TubeScout ajuda você a descobrir vídeos "outliers" (fora da curva) — conteúdo com performance muito acima da média do criador — para identificar tendências antes que elas se tornem populares.
 
-First, run the development server:
+![Preview do TubeScout](public/preview.png)
+
+---
+
+## 🚀 Como Rodar o Projeto (Passo a Passo)
+
+Siga estes passos para rodar o sistema no seu computador agora mesmo.
+
+### 1. Pré-requisitos
+
+Certifique-se de ter instalado:
+
+- **Node.js** (versão 18 ou superior)
+- Uma conta no **Supabase** (para o banco de dados)
+
+### 2. Instalação
+
+Abra o seu terminal (Prompt de Comando ou PowerShell) e rode:
+
+```bash
+# 1. Instalar as dependências do projeto
+npm install
+```
+
+### 3. Configuração (Variáveis de Ambiente)
+
+Crie um arquivo chamado `.env.local` na raiz do projeto e cole suas chaves (se já tiver):
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=sua_url_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anonima
+NEXT_PUBLIC_APP_URL=http://localhost:3001
+```
+
+### 4. Rodar o Projeto ▶️
+
+Este é o comando principal para iniciar o sistema:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Após rodar esse comando, abra seu navegador em: **[http://localhost:3001](http://localhost:3001)**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Funcionalidades
 
-## Learn More
+- **🔎 Radar de Outliers**: Encontre vídeos com alta taxa de visualização vs inscritos.
+- **📈 ScoutScore™**: Nossa métrica exclusiva (0-100) que combina velocidade de crescimento e engajamento.
+- **🔐 Login e Segurança**: Integração com Google e sistema de Admin/Usuário.
+- **💳 Planos e Assinaturas**: Estrutura pronta para planos (Scout Grátis até Agency).
+- **🌑 Interface Premium**: Design Dark Mode estilo Vercel, focado em dados.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👑 Guia do Administrador
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+O sistema possui um Painel Admin protegido (`/admin`) para monitorar usuários.
 
-## Deploy on Vercel
+### Como virar Admin
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Por padrão, todo usuário entra como `user`. Para virar `admin`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1.  Faça login no app com seu Google.
+2.  Vá no Painel SQL do Supabase e rode:
+    ```sql
+    UPDATE public.user_settings
+    SET role = 'admin'
+    WHERE user_id IN (SELECT id FROM auth.users WHERE email = 'seu_email@gmail.com');
+    ```
+3.  Acesse **[http://localhost:3001/admin](http://localhost:3001/admin)**.
+
+---
+
+## 🧪 Como Testar
+
+### Fluxo de Teste Manual
+
+1.  **Landing Page**: Abra `http://localhost:3001`. Veja se os botões levam para Login.
+2.  **Login**: Clique em "Entrar com Google". Deve redirecionar para `/app`.
+3.  **Proteção**: Tente acessar `/admin` sendo um usuário normal. O sistema deve te jogar de volta para `/app`.
+4.  **Admin**: Logue como admin e acesse `/admin`. Deve ver os gráficos.
+5.  **Busca**: Em `/app`, digite "minecraft" ou "finanças". Veja os resultados carregarem.
+
+### Comandos Úteis
+
+| Comando         | O que faz                                                       |
+| --------------- | --------------------------------------------------------------- |
+| `npm run dev`   | Roda o servidor de desenvolvimento (Esse é o que você mais usa) |
+| `npm run build` | Cria a versão de produção (para deploy)                         |
+| `npm run start` | Roda a versão de produção localmente                            |
+| `npm run lint`  | Verifica erros no código                                        |
+
+---
+
+_Desenvolvido pela Equipe TubeScout._
