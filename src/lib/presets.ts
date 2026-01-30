@@ -162,7 +162,7 @@ export function applyPresetToFilters(
     minViews: preset.formValues.minViews || 0,
     minLikes: preset.formValues.minLikes || 0,
     minSubscribers: preset.formValues.minSubscribers || 0,
-    maxSubscribers: preset.formValues.maxSubscribers,
+    maxSubscribers: preset.formValues.maxSubscribers ?? null,
     maxResults: preset.formValues.maxResults || 50,
   }
 }

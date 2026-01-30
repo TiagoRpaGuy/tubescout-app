@@ -92,7 +92,7 @@ export default function AppPage() {
       minViews: filter.filters.minViews,
       minLikes: filter.filters.minLikes,
       minSubscribers: filter.filters.minSubscribers,
-      maxSubscribers: filter.filters.maxSubscribers ?? undefined,
+      maxSubscribers: filter.filters.maxSubscribers ?? null,
       maxResults: filter.filters.maxResults,
     }
     setAppliedFilters(searchFilters)
