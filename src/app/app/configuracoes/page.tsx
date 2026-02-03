@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
-import { Settings, User, Moon, Globe, Trash2, LogOut } from "lucide-react"
+import { Settings, User, Moon, Globe, Trash2, LogOut, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import {
@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useTheme } from "@/hooks/use-theme"
 
 interface UserProfile {
   email: string
@@ -22,8 +23,10 @@ interface UserProfile {
 export default function ConfiguracoesPage() {
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [theme, setTheme] = useState("dark")
+  const { theme, setTheme } = useTheme()
   const [language, setLanguage] = useState("pt-BR")
+  const [showToast, setShowToast] = useState(false)
+  const [toastMessage, setToastMessage] = useState("")
 
   const loadProfile = async () => {
     const supabase = createClient()
@@ -139,7 +142,12 @@ export default function ConfiguracoesPage() {
                 Escolha o tema da interface
               </p>
             </div>
-            <Select value={theme} onValueChange={setTheme}>
+            <Select value={theme} onValueChange={(value) => {
+              setTheme(value as "light" | "dark" | "system")
+              setToastMessage("Tema alterado com sucesso")
+              setShowToast(true)
+              setTimeout(() => setShowToast(false), 3000)
+            }}>
               <SelectTrigger className="w-40">
                 <SelectValue />
               </SelectTrigger>
@@ -158,7 +166,13 @@ export default function ConfiguracoesPage() {
                 Idioma para filtros de busca
               </p>
             </div>
-            <Select value={language} onValueChange={setLanguage}>
+            <Select value={language} onValueChange={(value) => {
+              setLanguage(value)
+              localStorage.setItem("language", value)
+              setToastMessage("Idioma alterado com sucesso")
+              setShowToast(true)
+              setTimeout(() => setShowToast(false), 3000)
+            }}>
               <SelectTrigger className="w-40">
                 <SelectValue />
               </SelectTrigger>
@@ -234,6 +248,16 @@ export default function ConfiguracoesPage() {
           </div>
         </div>
       </div>
+
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom-5">
+          <div className="bg-primary text-primary-foreground rounded-lg px-4 py-3 shadow-lg flex items-center gap-2">
+            <Check className="h-4 w-4" />
+            <span className="text-sm font-medium">{toastMessage}</span>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

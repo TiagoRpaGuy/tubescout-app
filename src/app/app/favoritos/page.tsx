@@ -176,7 +176,7 @@ export default function FavoritosPage() {
             Faça uma busca e clique na estrela para salvar vídeos aqui.
           </p>
           <Button asChild>
-            <a href="/">Ir para Busca</a>
+            <a href="/app">Ir para Busca</a>
           </Button>
         </div>
       )}

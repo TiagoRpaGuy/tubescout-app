@@ -68,6 +68,19 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 
+  // Verificar se está acessando /admin e se é admin
+  if (user && request.nextUrl.pathname.startsWith("/admin")) {
+    const { data: userSettings } = await supabase
+      .from("user_settings")
+      .select("role")
+      .eq("user_id", user.id)
+      .single()
+
+    if (userSettings?.role !== "admin") {
+      return NextResponse.redirect(new URL("/app", request.url))
+    }
+  }
+
   // REMOVED: Redirect from "/" - allow landing page to be accessible
 
   return response

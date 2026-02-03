@@ -6,7 +6,6 @@ import { PresetChips } from "@/components/filters/preset-chips"
 import { SaveFilterModal } from "@/components/filters/save-filter-modal"
 import { SavedFiltersList } from "@/components/filters/saved-filters-list"
 import { VideoCard } from "@/components/results/video-card"
-import { SupportWidgets } from "@/components/support-widgets"
 import { UsageBanner } from "@/components/usage-banner"
 import { ApiKeyWarning } from "@/components/api-key-warning"
 import { SearchFilters, SearchResult } from "@/types"
@@ -205,8 +204,6 @@ export default function AppPage() {
         />
       )}
 
-      {/* Widgets de Suporte */}
-      <SupportWidgets />
     </div>
   )
 }

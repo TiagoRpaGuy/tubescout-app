@@ -3,14 +3,13 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Search, BarChart2, TrendingUp, Star, Settings } from "lucide-react"
+import { Search, BarChart2, Star, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { UserMenu } from "@/components/auth/user-menu"
 
 const navItems = [
   { href: "/app", label: "Buscar", icon: Search },
   { href: "/app/analises", label: "Análises", icon: BarChart2 },
-  { href: "/app/outliers", label: "Outliers", icon: TrendingUp },
   { href: "/app/favoritos", label: "Favoritos", icon: Star },
   { href: "/app/configuracoes", label: "Configurações", icon: Settings },
 ]
